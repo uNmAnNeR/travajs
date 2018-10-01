@@ -3,7 +3,7 @@
 type Validator = (data: any, ...args: *) => [any, any];
 
 export function
-composeValidators (vs: Array<Validator>|Validator = (d) => [null, d]) {
+composeValidators (vs: Array<Validator> | Validator = (d) => [null, d]) {
   if (!Array.isArray(vs)) return vs;
   vs = vs.map(composeValidators);
 

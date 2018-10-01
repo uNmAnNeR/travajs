@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <script type="text/javascript" src="dist/ivalidate.js"></script>
+  <script type="text/javascript">
+    let data = {
+      a: 1,
+      b: '',
+      c: 123,
+    };
+
+    console.log(IValidate(IValidate.Keys({
+      a: n => [null, n],
+      b: str => [null, 'a'],
+      c: IValidate.Required(n => n < 1000 ? ['less than 1000!'] : [null, n]),
+    }), data));
+
+
+    const ordata = {
+      a: 'qwe',
+      b: 1,
+      email: 'ok@mail.ru',
+      phone: '9012012329',
+    };
+
+    console.log(IValidate([
+      IValidate.Keys({
+        a: n => Number.isInteger(n) ? [null, n] : ["NOT A NUMBER!"],
+        b: IValidate.Optional(),
+      }),
+      obj => {
+        if (!(Boolean(obj.email) ^ Boolean(obj.phone))) return ['NO DATA FIELDS!'];
+        return obj;
+      }
+    ], ordata));
+  </script>
+</body>
+</html>

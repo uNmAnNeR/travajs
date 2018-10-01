@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "plugin:flowtype/recommended"
+  ],
+
+  "plugins": [
+    "flowtype"
+  ],
+
+  "env": {
+    "browser": true,
+    "es6": true,
+    "mocha": true
+  },
+
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+
+    "ecmaFeatures": {
+      "classes": true
+    },
+  },
+
+  "globals": {
+    "IMask": false
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "author": "Alexey Kryazhev",
+  "name": "ivalidate",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "vanilla javascript validation library",
+  "bugs": "https://github.com/uNmAnNeR/ivalidatejs/issues",
+  "homepage": "https://unmanner.github.io/ivalidatejs/",
+  "repository": "https://github.com/uNmAnNeR/ivalidatejs",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-object-assign": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-flow": "^7.0.0",
+    "babel-eslint": "^9.0.0",
+    "babel-plugin-istanbul": "^5.0.1",
+    "chai": "^4.1.2",
+    "coveralls": "^3.0.2",
+    "documentation": "^8.1.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "flow-bin": "^0.80.0",
+    "mocha": "^5.2.0",
+    "rollup": "^0.65.2",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.1.5",
+    "rollup-plugin-eslint": "^5.0.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-terser": "^2.0.2",
+    "sinon": "^6.1.5"
+  },
+  "engines": {
+    "npm": ">=4.0.0",
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "doc": "node ./node_modules/documentation/bin/documentation.js build packages/imask/src/imask.js -f html -o docs/api",
+    "lerna": "lerna",
+    "flow": "flow check",
+    "clean": "lerna clean",
+    "watch": "rollup -c -w --environment format:umd",
+    "build": "npm run build:dev && npm run build:prod",
+    "build:dev": "npm run build:dev:es && npm run build:dev:umd",
+    "build:prod": "npm run build:prod:es && npm run build:prod:umd",
+    "build:dev:es": "rollup -c --environment format:es",
+    "build:dev:umd": "rollup -c --environment format:umd",
+    "build:prod:es": "rollup -c --environment format:es,env:production",
+    "build:prod:umd": "rollup -c --environment format:umd,env:production",
+    "test": "echo 'TOdo tests' ",
+    "make": "npm run test && npm run build",
+    "release": "npm run doc && npm run make && npm publish",
+    "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "keywords": [
+    "javascript",
+    "validate"
+  ],
+  "files": [
+    "dist"
+  ]
+}

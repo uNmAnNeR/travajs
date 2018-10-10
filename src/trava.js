@@ -4,17 +4,19 @@ import Each from './validators/Each';
 import Keys from './validators/Keys';
 import Required from './validators/Required';
 import Optional from './validators/Optional';
+import Check from './validators/Check';
 
 
-const IValidate = function (scheme, data) {
+const Trava = function (scheme, data) {
   const vs = composeValidators(scheme);
   return vs(data);
 };
 
-IValidate.Each = Each;
-IValidate.Keys = Keys;
-IValidate.Required = Required;
-IValidate.Optional = Optional;
+Trava.Each = Each;
+Trava.Keys = Keys;
+Trava.Required = Required;
+Trava.Optional = Optional;
+Trava.Check = Check;
 
-g.IValidate = IValidate;
-export default IValidate;
+g.Trava = Trava;
+export default Trava;

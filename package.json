@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "license": "MIT",
   "description": "vanilla javascript validation library",
+  "main": "dist/trava.js",
   "bugs": "https://github.com/uNmAnNeR/travajs/issues",
   "homepage": "https://unmanner.github.io/travajs/",
   "repository": "https://github.com/uNmAnNeR/travajs",

@@ -3,7 +3,7 @@ vanilla javascript validation library with coercion
 
 [![Build Status](https://travis-ci.org/uNmAnNeR/travajs.svg?branch=master)](https://travis-ci.org/uNmAnNeR/travajs)
 [![Coverage Status](https://coveralls.io/repos/github/uNmAnNeR/travajs/badge.svg?branch=master)](https://coveralls.io/github/uNmAnNeR/travajs?branch=master)
-[![npm version](https://badge.fury.io/js/imask.svg)](https://badge.fury.io/jas/imask)
+[![npm version](https://badge.fury.io/js/trava.svg)](https://badge.fury.io/jas/trava)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 

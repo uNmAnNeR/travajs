@@ -1,12 +1,12 @@
 {
   "author": "Alexey Kryazhev",
-  "name": "ivalidate",
+  "name": "trava",
   "version": "0.0.1",
   "license": "MIT",
   "description": "vanilla javascript validation library",
-  "bugs": "https://github.com/uNmAnNeR/ivalidatejs/issues",
-  "homepage": "https://unmanner.github.io/ivalidatejs/",
-  "repository": "https://github.com/uNmAnNeR/ivalidatejs",
+  "bugs": "https://github.com/uNmAnNeR/travajs/issues",
+  "homepage": "https://unmanner.github.io/travajs/",
+  "repository": "https://github.com/uNmAnNeR/travajs",
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
@@ -36,7 +36,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "doc": "node ./node_modules/documentation/bin/documentation.js build packages/imask/src/imask.js -f html -o docs/api",
+    "doc": "echo 'TODO'",
     "lerna": "lerna",
     "flow": "flow check",
     "clean": "lerna clean",

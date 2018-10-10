@@ -9,12 +9,12 @@ const isProd = process.env.env === 'production';
 
 const format = process.env.format || 'umd';
 const isES = format === 'es';
-const file = 'dist/ivalidate' +
+const file = 'dist/trava' +
   (format !== 'umd' ? '.' + format : '') +
   (isProd ? '.min' : '') +
   '.js';
 
-const input = 'src/ivalidate.js'; // TODO isES ? 'src/ivalidate.js' : 'src/ivalidate.shim.js';
+const input = 'src/trava.js'; // TODO isES ? 'src/trava.js' : 'src/trava.shim.js';
 
 const babelConf = isES ? {
   presets: [
@@ -51,7 +51,7 @@ export default {
   output: {
     file,
     format,
-    name: 'IValidate',
+    name: 'Trava',
     sourcemap: true,
   },
   plugins: [

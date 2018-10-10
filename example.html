@@ -4,7 +4,7 @@
   <title></title>
 </head>
 <body>
-  <script type="text/javascript" src="dist/ivalidate.js"></script>
+  <script type="text/javascript" src="dist/trava.js"></script>
   <script type="text/javascript">
     let data = {
       a: 1,
@@ -12,10 +12,10 @@
       c: 123,
     };
 
-    console.log(IValidate(IValidate.Keys({
+    console.log(Trava(Trava.Keys({
       a: n => [null, n],
       b: str => [null, 'a'],
-      c: IValidate.Required(n => n < 1000 ? ['less than 1000!'] : [null, n]),
+      c: Trava.Required(n => n < 1000 ? ['less than 1000!'] : [null, n]),
     }), data));
 
 
@@ -26,10 +26,10 @@
       phone: '9012012329',
     };
 
-    console.log(IValidate([
-      IValidate.Keys({
+    console.log(Trava([
+      Trava.Keys({
         a: n => Number.isInteger(n) ? [null, n] : ["NOT A NUMBER!"],
-        b: IValidate.Optional(),
+        b: Trava.Optional(),
       }),
       obj => {
         if (!(Boolean(obj.email) ^ Boolean(obj.phone))) return ['NO DATA FIELDS!'];

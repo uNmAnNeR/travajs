@@ -1,3 +1,6 @@
+import { composeValidators } from '../utils';
+
+
 // TODO Currently works only for Arrays
 export default
 function Each (validator) {

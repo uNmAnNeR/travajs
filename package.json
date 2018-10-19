@@ -1,7 +1,7 @@
 {
   "author": "Alexey Kryazhev",
   "name": "trava",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "description": "vanilla javascript validation library",
   "main": "dist/trava.js",

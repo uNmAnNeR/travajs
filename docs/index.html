@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>travajs - vanilla javascript validation library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/kube/6.5.2/css/kube.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1 class="title"><a href="/travajs">trava<sub>js</sub></a></h1>
+        <em>vanilla javascript validation library</em>
+      </div>
+      <nav class="breadcrumbs push-center">
+        <ul>
+          <li><a href="#features">features</a></li>
+          <li><a href="#install">install</a></li>
+          <li><a href="#getting-started">getting started</a></li>
+          <li><a href="https://github.com/uNmAnNeR/travajs">on Github</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <p><strong>Trava</strong> stands for <strong>TRA</strong>nsform and <strong>VA</strong>lidate. Inspired by <a href="http://funcool.github.io/struct/latest/">struct</a>.</p>
+      <p>The main goal of the library is to provide highly extendable and customizable way of validation JavaScript entities. Validation is often goes along with parsing or transforming values. So coercion feature is included by design into Trava.</p>
+
+      <h2 id="features" class="section-h"><a href="#features">Features</a></h2>
+      <ul>
+        <li>easy to use</li>
+        <li>no external dependencies</li>
+        <li>supports all major browsers and IE11+</li>
+        <li>customizable and extendable</li>
+      </ul>
+
+      <h2 id="install" class="section-h"><a href="#install">Install</a></h2>
+      <p>Install from <a href="https://www.npmjs.com/package/trava">npm</a>:</p>
+      <pre><code>npm install trava</code></pre>
+      <p>And import or require:</p>
+      <pre><code>import Trava from 'trava';</code></pre>
+      <p>or use CDN:</p>
+      <pre><code>&lt;script src=&quot;https://unpkg.com/trava&quot;&gt;&lt;/script&gt;</code></pre>
+      <p>For modern browsers <em>es201X</em> builds available (<code>trava.es.js</code> and <code>trava.es.min.js</code>).</p>
+
+      <h2 id="getting-started" class="section-h"><a href="#getting-started">Getting Started</a></h2>
+      Lets imaging the most obvious and simplest validator. Probably it will look like:
+      <pre><code>function validate (value) {
+  // any checking...
+  if (!check(value)) return false;
+  return true;
+}</code></pre>
+      But in real scenarious we'd like also to get some error details, e.g.:
+      <pre><code>function validate (value) {
+  if (!check1(value)) return 'ERROR_1';
+  if (!check2(value)) return 'ERROR_2';
+  return true;
+}</code></pre>
+      We may stop here and probably you don't need any library to do validation this way, may be just some primitives for common cases. But there is one more feature we might want to get and when <strong>Trava</strong> could help. While using JSON it's often needed to parse or convert values after validation. Code for parsing looks pretty the same as validation just <code>validate</code> is replaced to <code>parse</code>. In <strong>Trava</strong> this steps are united together. To support both validation and transformation we need to return tuple [error, value] from validator, so <strong>Trava</strong> validator looks like:
+      <pre><code>function validate (value) {
+  if (!check1(value)) return ['ERROR_1'];  // <- error as first element of a tuple
+  if (!check2(value)) return ['ERROR_2'];  // <- same
+  // `null` means no error, second item is value
+  return [null, parseOrTransform(value)];  // apply some parse or transform
+}</code></pre>
+    </main>
+    <footer class="text-center">
+      <nav class="breadcrumbs push-center">
+        <ul>
+          <li><span class="active">other projects</span></li>
+          <li><a href="https://unmanner.github.io/imaskjs/" target="_blank">imask</a></li>
+          <li><a href="https://unmanner.github.io/ispinjs/" target="_blank">ispin</a></li>
+        </ul>
+      </nav>
+    </footer>
+  </body>
+</html>

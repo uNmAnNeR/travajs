@@ -1,25 +1,26 @@
-import { g, composeValidators } from './utils';
+import { g } from './utils';
 
-import Each from './validators/Each';
-import Keys from './validators/Keys';
-import Required from './validators/Required';
-import Optional from './validators/Optional';
-import Nullable from './validators/Nullable';
-import Check from './validators/Check';
+import Each from './operators/Each';
+import Keys from './operators/Keys';
+import Required from './operators/Required';
+import Optional from './operators/Optional';
+import Nullable from './operators/Nullable';
+import Check from './operators/Check';
+import Compose from './operators/Compose';
 
 
 const Trava = function (scheme, data) {
-  const vs = composeValidators(scheme);
+  const vs = Compose(scheme);
   return vs(data);
 };
 
-Trava.composeValidators = composeValidators;
 Trava.Each = Each;
 Trava.Keys = Keys;
 Trava.Required = Required;
 Trava.Optional = Optional;
 Trava.Nullable = Nullable;
 Trava.Check = Check;
+Trava.Compose = Compose;
 
 g.Trava = Trava;
 export default Trava;

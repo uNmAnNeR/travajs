@@ -1,9 +1,9 @@
-import { composeValidators } from '../utils';
+import Compose from './Compose';
 
 
 export default
 function Nullable (vs, defaultValue=null) {
-  vs = composeValidators(vs);
+  vs = Compose(vs);
 
   return function (d, ...args) {
     if (d == null) return [null, defaultValue];

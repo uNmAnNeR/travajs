@@ -1,10 +1,10 @@
-import { composeValidators } from '../utils';
+import Compose from './Compose';
 
 
 // TODO Currently works only for Arrays
 export default
 function Each (validator) {
-  validator = composeValidators(validator);
+  validator = Compose(validator);
 
   return function (coll, opts) {
     let errors;

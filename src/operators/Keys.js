@@ -1,4 +1,6 @@
 import Compose from './Compose';
+import { ValidationError } from '../errors';
+
 
 export default
 function Keys (vMap) {
@@ -8,15 +10,17 @@ function Keys (vMap) {
 
     Object.keys(vMap).forEach(k => {
       const validator = Compose(vMap[k]);
-      const [kerr, kval] = validator(coll[k], k, coll, opts);
-      if (kerr) {
+      const res = validator(coll[k], k, coll, opts);
+      if (res instanceof Error) {
         if (!errors) errors = {};
-        errors[k] = kerr;
-      } else if (k in coll){
-        valid[k] = kval;
+        errors[k] = ValidationError.extractErrorData(res);
+      } else if (k in coll) {
+        valid[k] = res;
       }
     });
 
-    return [errors, valid];
+    return errors ?
+      new ValidationError(errors) :
+      valid;
   }
 }

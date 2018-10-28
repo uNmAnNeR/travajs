@@ -9,10 +9,15 @@ import Check from './operators/Check';
 import Compose from './operators/Compose';
 import Some from './operators/Some';
 
+import { ValidationError } from './errors';
 
-const Trava = function (scheme, data) {
+
+const Trava = function (scheme, data, opts) {
   const vs = Compose(scheme);
-  return vs(data);
+  // possible opts to implement:
+  // - skipErrors - return just valid fields, skip errors
+  // - wrapExceptions - treat exceptions like validation errors
+  return vs(data, opts);
 };
 
 Trava.Each = Each;
@@ -22,6 +27,7 @@ Trava.Optional = Optional;
 Trava.Nullable = Nullable;
 Trava.Check = Check;
 Trava.Some = Some;
+Trava.ValidationError = ValidationError;
 
 g.Trava = Trava;
 export default Trava;

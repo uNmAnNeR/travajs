@@ -10,14 +10,14 @@ function Some (vs: Array<Validator>) {
 
   return function (data: any, ...args: *) {
     let d=data;
-    let err;
+    let res;
 
     for (let i=0; i<vs.length; ++i) {
       const v = vs[i];
-      [err, d] = v(d, ...args);
-      if (!err) break;
+      res = v(d, ...args);
+      if (!(res instanceof Error)) break;
     }
 
-    return [err, d];
+    return res;
   }
 }

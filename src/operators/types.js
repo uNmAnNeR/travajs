@@ -2,4 +2,4 @@
 
 
 export
-type Validator = (data: any, ...args: *) => [any, any];
+type Validator = (data: any, ...args: *) => any;

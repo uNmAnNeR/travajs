@@ -1,6 +1,7 @@
 import Compose from './Compose';
+import { ValidationError } from '../errors';
 
-
+// TODO flow
 // TODO Currently works only for Arrays
 export default
 function Each (validator) {
@@ -11,15 +12,17 @@ function Each (validator) {
     const valid = [];
 
     for (let i=0; i<coll.length; i++) {
-      const [ierr, ival] = validator(coll[i], i, coll, opts);
-      if (ierr) {
+      const res = validator(coll[i], i, coll, opts);
+      if (res instanceof Error) {
         if (!errors) errors = {};
-        errors[i] = ierr;
+        errors[i] = ValidationError.extractErrorData(res);
       } else {
-        valid.push(ival);
+        valid.push(res);
       }
     }
 
-    return [errors, valid];
+    return errors ?
+      new ValidationError(errors) :
+      valid;
   }
 }

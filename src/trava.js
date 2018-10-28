@@ -7,6 +7,7 @@ import Optional from './operators/Optional';
 import Nullable from './operators/Nullable';
 import Check from './operators/Check';
 import Compose from './operators/Compose';
+import Some from './operators/Some';
 
 
 const Trava = function (scheme, data) {
@@ -20,7 +21,7 @@ Trava.Required = Required;
 Trava.Optional = Optional;
 Trava.Nullable = Nullable;
 Trava.Check = Check;
-Trava.Compose = Compose;
+Trava.Some = Some;
 
 g.Trava = Trava;
 export default Trava;

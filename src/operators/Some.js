@@ -2,10 +2,10 @@
 
 
 import { type Validator } from './types';
+import Compose from './Compose';
 
 export default
-function Compose (vs: Array<Validator> | Validator = (d) => [null, d]) {
-  if (!Array.isArray(vs)) return vs;
+function Some (vs: Array<Validator>) {
   vs = vs.map(Compose);
 
   return function (data: any, ...args: *) {
@@ -15,7 +15,7 @@ function Compose (vs: Array<Validator> | Validator = (d) => [null, d]) {
     for (let i=0; i<vs.length; ++i) {
       const v = vs[i];
       [err, d] = v(d, ...args);
-      if (err) break;
+      if (!err) break;
     }
 
     return [err, d];

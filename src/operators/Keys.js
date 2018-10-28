@@ -13,7 +13,7 @@ function Keys (vMap) {
       const res = validator(coll[k], k, coll, opts);
       if (res instanceof Error) {
         if (!errors) errors = {};
-        errors[k] = ValidationError.extractErrorData(res);
+        errors[k] = ValidationError.extractData(res);
       } else if (k in coll) {
         valid[k] = res;
       }

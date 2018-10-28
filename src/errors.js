@@ -6,20 +6,20 @@ import { isString } from './utils';
 export
 class ValidationError<T> extends Error {
   message: string;
-  raw: T;
-  static extractErrorData: (Error) => string;
+  data: T;
+  static extractData: (Error) => string;
 
   constructor (data: T) {
     super(JSON.stringify(data));
     this.name = 'VALIDATION_ERROR';
-    this.raw = data;
+    this.data = data;
   }
 
   toString (): string {
-    return JSON.stringify(this.raw);
+    return JSON.stringify(this.data);
   }
 }
-ValidationError.extractErrorData = function (error: Error): string {
-  if (error instanceof ValidationError) return error.raw;
+ValidationError.extractData = function (error: Error): string {
+  if (error instanceof ValidationError) return error.data;
   return String(error);
 }

@@ -15,7 +15,7 @@ function Each (validator) {
       const res = validator(coll[i], i, coll, opts);
       if (res instanceof Error) {
         if (!errors) errors = {};
-        errors[i] = ValidationError.extractErrorData(res);
+        errors[i] = ValidationError.extractData(res);
       } else {
         valid.push(res);
       }

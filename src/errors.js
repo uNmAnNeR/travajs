@@ -11,7 +11,7 @@ class ValidationError<T> extends Error {
 
   constructor (data: T) {
     super(JSON.stringify(data));
-    this.name = 'VALIDATION_ERROR';
+    this.name = 'ValidationError';
     this.data = data;
   }
 

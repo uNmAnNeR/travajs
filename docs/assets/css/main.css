@@ -27,6 +27,10 @@ nav {
   border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
 }
 
+nav ul {
+  flex-wrap: wrap;
+}
+
 header nav {
   margin-top: 30px;
 }

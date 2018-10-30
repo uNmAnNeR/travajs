@@ -19,9 +19,10 @@
       </div>
       <nav class="breadcrumbs push-center">
         <ul>
-          <li><a href="#features">features</a></li>
           <li><a href="#install">install</a></li>
           <li><a href="#getting-started">getting started</a></li>
+          <li><a href="#operators">operators</a></li>
+          <li><a href="#examples">examples</a></li>
           <li><a href="https://github.com/uNmAnNeR/travajs">on Github</a></li>
         </ul>
       </nav>
@@ -29,6 +30,7 @@
     <main>
       <p><strong>Trava</strong> stands for <strong>TRA</strong>nsform and <strong>VA</strong>lidate. Inspired by <a href="http://funcool.github.io/struct/latest/">struct</a>.</p>
       <p>The main goal of the library is to provide highly extendable and customizable way of validation JavaScript entities. Validation is often goes along with parsing or transforming values. So coercion feature is included by design into Trava.</p>
+
 
       <h2 id="features" class="section-h"><a href="#features">Features</a></h2>
       <ul>
@@ -38,6 +40,7 @@
         <li>customizable and extendable</li>
       </ul>
 
+
       <h2 id="install" class="section-h"><a href="#install">Install</a></h2>
       <p>Install from <a href="https://www.npmjs.com/package/trava">npm</a>:</p>
       <pre><code>npm install trava</code></pre>
@@ -46,6 +49,7 @@
       <p>or use CDN:</p>
       <pre><code>&lt;script src=&quot;https://unpkg.com/trava&quot;&gt;&lt;/script&gt;</code></pre>
       <p>For modern browsers <em>es201X</em> builds available (<code>trava.es.js</code> and <code>trava.es.min.js</code>).</p>
+
 
       <h2 id="getting-started" class="section-h"><a href="#getting-started">Getting Started</a></h2>
       Lets imaging the most obvious and simplest validator. Probably it will look like:
@@ -60,13 +64,63 @@
   if (!check2(value)) return 'ERROR_2';
   return true;
 }</code></pre>
-      We may stop here and probably you don't need any library to do validation this way, may be just some primitives for common cases. But there is one more feature we might want to get and when <strong>Trava</strong> could help. While using JSON it's often needed to parse or convert values after validation. Code for parsing looks pretty the same as validation just <code>validate</code> is replaced to <code>parse</code>. In <strong>Trava</strong> this steps are united together. To support both validation and transformation we need to return tuple [error, value] from validator, so <strong>Trava</strong> validator looks like:
+      <p>We may stop here and probably you don't need any library to do validation this way, may be just some primitives for common cases. But there is one more feature we might want to get and when <strong>Trava</strong> could help. While using JSON it's often needed to parse or convert values after validation. Code for parsing looks pretty the same as validation just <code>validate</code> is replaced to <code>parse</code>. In <strong>Trava</strong> these steps are united together. To support both validation and transformation we need to distinguish error from transformed value returned from validator. Probably we could use js <code>Error</code>, but it works only with string messages. Fortunately <strong>Trava</strong> has own <code>ValidationError</code> to support complex errors.
+      </p>
+      <p>So <strong>Trava</strong> validator looks like:</p>
       <pre><code>function validate (value) {
-  if (!check1(value)) return ['ERROR_1'];  // <- error as first element of a tuple
-  if (!check2(value)) return ['ERROR_2'];  // <- same
-  // `null` means no error, second item is value
-  return [null, parseOrTransform(value)];  // apply some parse or transform
+  if (!check1(value)) return new Trava.ValidationError({ code: 401 });
+  if (!check2(value)) return new Trava.ValidationError({ code: 405 });
+  return parseOrTransform(value);  // apply some parse or transform
 }</code></pre>
+      <p>Then use validator:</p>
+      <pre><code>const result = validate(data);
+if (result instanceof Trava.ValidationError) {
+  // note using `data` property to extract error data
+  console.log('This is error!', result.data);
+} else {
+  const goodTransformedValue = result;
+}
+</code></pre>
+    <p>That's all you have to know to start using <strong>Trava</strong>. It is very simple. The second advantage why to use <strong>Trava</strong> is a collection of helpful <a href="#operators">operators</a> out of the box. See <a href="#examples">examples</a> how to use them.</p>
+
+
+    <h2 id="operators" class="section-h"><a href="#operators">Operators</a></h2>
+    <nav class="breadcrumbs push-center">
+      <ul>
+        <li><a href="#operators-compose">Compose</a></li>
+        <li><a href="#operators-required">Required</a></li>
+        <li><a href="#operators-optional">Optional</a></li>
+        <li><a href="#operators-nullable">Nullable</a></li>
+        <li><a href="#operators-each">Each</a></li>
+        <li><a href="#operators-keys">Keys</a></li>
+        <li><a href="#operators-some">Some</a></li>
+        <li><a href="#operators-check">Check</a></li>
+      </ul>
+    </nav>
+    <h3 id="operators-compose" class="section-h"><a href="#operators-compose">Compose</a></h3>
+    <p><a href="https://en.wikipedia.org/wiki/Function_composition_(computer_science)" target="_blank">Compose</a> is used to combine several validators into one. E.g.:</p>
+    <pre><code>const validator1 = ...;
+const validator2 = ...;
+const validator3 = ...;
+const composedValidator = Trava.Compose([validator1, validator2, validator3]);
+// then `composedValidator` could be used just like simple validator
+</code></pre>
+    <p>Validation goes consequently from left to right. When an error occurs, validation stops and an error is returned immediately.</p>
+    <p>When used inside other operators explicit call <code>Trava.Compose</code> could be omitted. E.g.:</p>
+    <pre><code>const composedValidator = Trava.Required(Trava.Compose([validator1, validator2, validator3]));
+// is same as
+const composedValidator = Trava.Required([validator1, validator2, validator3]);
+</code></pre>
+
+    <h3 id="operators-required" class="section-h"><a href="#operators-required">Required</a></h3>
+    <h3 id="operators-optional" class="section-h"><a href="#operators-optional">Optional</a></h3>
+    <h3 id="operators-nullable" class="section-h"><a href="#operators-nullable">Nullable</a></h3>
+    <h3 id="operators-each" class="section-h"><a href="#operators-each">Each</a></h3>
+    <h3 id="operators-keys" class="section-h"><a href="#operators-keys">Keys</a></h3>
+    <h3 id="operators-some" class="section-h"><a href="#operators-some">Some</a></h3>
+    <h3 id="operators-check" class="section-h"><a href="#operators-check">Check</a></h3>
+
+    <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h2>
     </main>
     <footer class="text-center">
       <nav class="breadcrumbs push-center">

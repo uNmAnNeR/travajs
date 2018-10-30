@@ -21,7 +21,7 @@ or use CDN:
 `npm run make`
 
 ## Compatibility
-Supports all major browsers and IE11+ [need to support older?](https://unmanner.github.io/travajs/guide.html#support-older)
+Supports all major browsers and IE11+
 
 ## Docs, Examples, Demo
 [https://unmanner.github.io/travajs/](https://unmanner.github.io/travajs/)

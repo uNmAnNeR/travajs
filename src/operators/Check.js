@@ -1,9 +1,11 @@
+// @flow
+import { ValidationError } from '../errors';
+
+
 export default
-function Check (fn, msg=Check.ErrorMessage) {
-	return function (d, ...args) {
-	  return fn(d) ?
-	  	[null, d] :
-	  	[msg];
+function Check (fn: (v: any) => boolean, msg: any=Check.ErrorMessage) {
+	return function (d: any, ...args: *) {
+	  return fn(d) ? d : new ValidationError(msg);
 	};
 }
 Check.ErrorMessage = "Incorrect value";

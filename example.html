@@ -13,9 +13,9 @@
     };
 
     console.log(Trava(Trava.Keys({
-      a: n => [null, n],
-      b: str => [null, 'a'],
-      c: Trava.Required(n => n < 1000 ? ['less than 1000!'] : [null, n]),
+      a: n => n,
+      b: str => 'a',
+      c: Trava.Required(n => n < 1000 ? new Trava.ValidationError('less than 1000!') : n),
     }), data));
 
 
@@ -28,11 +28,11 @@
 
     console.log(Trava([
       Trava.Keys({
-        a: n => Number.isInteger(n) ? [null, n] : ["NOT A NUMBER!"],
+        a: n => Number.isInteger(n) ? n : new Trava.ValidationError('NOT A NUMBER!'),
         b: Trava.Optional(),
       }),
       obj => {
-        if (!(Boolean(obj.email) ^ Boolean(obj.phone))) return ['NO DATA FIELDS!'];
+        if (!(Boolean(obj.email) ^ Boolean(obj.phone))) return new Trava.ValidationError('NO DATA FIELDS!');
         return obj;
       }
     ], ordata));

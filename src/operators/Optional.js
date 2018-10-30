@@ -6,7 +6,7 @@ function Optional (vs, defaultValue) {
   vs = Compose(vs);
 
   return function (d, ...args) {
-    if (d === undefined) return [null, defaultValue];
+    if (d === undefined) return defaultValue;
     return vs(d, ...args);
   };
 }

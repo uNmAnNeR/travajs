@@ -10,4 +10,4 @@ function Required (vs, msg=Required.ErrorMessage) {
     return vs(d, ...args);
   }
 }
-Required.ErrorMessage = "Attribute is required";
+Required.ErrorMessage = "Value is required";

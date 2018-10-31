@@ -91,15 +91,15 @@ if (result instanceof Trava.ValidationError) {
         <li><a href="#operators-required">Required</a></li>
         <li><a href="#operators-optional">Optional</a></li>
         <li><a href="#operators-nullable">Nullable</a></li>
+        <li><a href="#operators-check">Check</a></li>
         <li><a href="#operators-each">Each</a></li>
         <li><a href="#operators-keys">Keys</a></li>
         <li><a href="#operators-some">Some</a></li>
-        <li><a href="#operators-check">Check</a></li>
       </ul>
     </nav>
     <h3 id="operators-compose" class="section-h"><a href="#operators-compose">Compose</a></h3>
     <p><a href="https://en.wikipedia.org/wiki/Function_composition_(computer_science)" target="_blank">Compose</a> is used to combine several validators into one. E.g.:</p>
-    <pre><code>const validator1 = ...;
+    <pre><code>const validator1 = n => n < 10 ? n : new ValidationError('BAD NUMBER');
 const validator2 = ...;
 const validator3 = ...;
 const composedValidator = Trava.Compose([validator1, validator2, validator3]);
@@ -107,18 +107,84 @@ const composedValidator = Trava.Compose([validator1, validator2, validator3]);
 </code></pre>
     <p>Validation goes consequently from left to right. When an error occurs, validation stops and an error is returned immediately.</p>
     <p>When used inside other operators explicit call <code>Trava.Compose</code> could be omitted. E.g.:</p>
-    <pre><code>const composedValidator = Trava.Required(Trava.Compose([validator1, validator2, validator3]));
+    <pre><code>const composedValidator = Trava.Required(Trava.Compose([v1, v2, v3]));
 // is same as
-const composedValidator = Trava.Required([validator1, validator2, validator3]);
+const composedValidator = Trava.Required([v1, v2, v3]);
 </code></pre>
 
     <h3 id="operators-required" class="section-h"><a href="#operators-required">Required</a></h3>
+    <p><code>Required</code> is a guard to check if a value is defined (<code>!== undefined</code>):</p>
+    <pre><code>const validator = ...;
+const requiredValidator = Trava.Required(validator);
+
+let value;
+console.log(requiredValidator(value)); // ValidationError('Value is required')
+
+value = 'any';
+console.log(requiredValidator(value)); // `Required` is bypassed
+</code></pre>
+    <p>Custom error message could be set by providing it as a second argument:</p>
+    <pre><code>const requiredValidator = Trava.Required(validator, 'My custom error message');</code></pre>
+    <p>Or to set default use:</p>
+    <pre><code>Trava.Required.ErrorMessage = 'My default required error';</code></pre>
+
     <h3 id="operators-optional" class="section-h"><a href="#operators-optional">Optional</a></h3>
+    <p><code>Optional</code> checks if value is not defined then returns value or default value which can be provided as a second argument:</p>
+    <pre><code>const optionalValidator = Trava.Optional(validator, 'default value');</code></pre>
+
     <h3 id="operators-nullable" class="section-h"><a href="#operators-nullable">Nullable</a></h3>
-    <h3 id="operators-each" class="section-h"><a href="#operators-each">Each</a></h3>
-    <h3 id="operators-keys" class="section-h"><a href="#operators-keys">Keys</a></h3>
-    <h3 id="operators-some" class="section-h"><a href="#operators-some">Some</a></h3>
+    <p><code>Nullable</code> is just like <a href="operators-optional">Optional</a> except it also checks if value is not <code>null</code>.</p>
+
     <h3 id="operators-check" class="section-h"><a href="#operators-check">Check</a></h3>
+    <code>Check</code> is helper to reuse validators which returns boolean:
+    <pre><code>const myExistingValidator = (v) => v < 10;
+const travaValidator = Trava.Check(myExistingValidator);
+
+console.log(travaValidator(20)); // ValidationError('Incorrect value')
+</code></pre>
+    <p>Custom error message could be set by providing it as a second argument:</p>
+    <pre><code>const checkValidator = Trava.Check(n => Boolean(n), 'My custom error message');</code></pre>
+    <p>Or to set default use:</p>
+    <pre><code>Trava.Check.ErrorMessage = 'My default check error';</code></pre>
+
+    <h3 id="operators-each" class="section-h"><a href="#operators-each">Each</a></h3>
+    <p><code>Each</code> is usefull for validating uniform data structures (now works only for arrays). Errors are aggregated in object by keys (or indices):</p>
+    <pre><code>const elementValidator = n => n < 10 ? n : new ValidationError('BAD NUMBER');
+const arrayValidator = Trava.Each(elementValidator);
+
+console.log(arrayValidator([1, 15, 7, 5, 20]));
+// ValidationError({2: 'BAD NUMBER', 4: 'BAD NUMBER'})
+</code></pre>
+
+    <h3 id="operators-keys" class="section-h"><a href="#operators-keys">Keys</a></h3>
+    <p><code>Keys</code> is used to validate Objects:</p>
+    <pre><code>const objectValidator = Trava.Keys({
+  a: Trava.Check(a => a >= 0),
+  b: Trava.Required(Trava.Check(b => b.startsWith('nice'), 'HEY, think positive!')),
+});
+
+console.log(objectValidator({
+  a: -1,
+  b: 'bad wrong error'
+}));
+// ValidationError({
+//   a: 'Incorrect value'.
+//   b: 'HEY, think positive!',
+// })
+</code></pre>
+
+    <h3 id="operators-some" class="section-h"><a href="#operators-some">Some</a></h3>
+    <p><code>Some</code> is like <a href="#operators-compose">Compose</a> but tries to find first non error.</p>
+    <pre><code>
+const someValidator = Trava.Some([
+  Trava.Check(isString, 'Not a string'),
+  Trava.Check(isNumber, 'Not a number'),
+]);
+
+console.log(someValidator(1));   // 1
+console.log(someValidator('a')); // 'a'
+console.log(someValidator({}));  // ValidationError('Not a number') <-- latest error
+</code></pre>
 
     <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h2>
     </main>

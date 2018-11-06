@@ -26,6 +26,7 @@ Trava.Required = Required;
 Trava.Optional = Optional;
 Trava.Nullable = Nullable;
 Trava.Check = Check;
+Trava.Compose = Compose;
 Trava.Some = Some;
 Trava.ValidationError = ValidationError;
 

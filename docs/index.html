@@ -195,6 +195,34 @@ console.log(someValidator({}));  // ValidationError('Not a number') <-- latest e
 </code></pre>
 
     <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h2>
+    <pre><code>const { Required, Optional, Each, Enum, Check, Keys, Some, ValidationError } = require('trava');
+
+const isString = s => typeof s === 'string';
+const isEmail = s => /^\S+@\S+\.\S+$/.test(s);
+
+const validateForm = Keys({
+  username: Required(Check(un => isString(un) && /^\w{3,30}$/.test(un), 'CUSTOM ERROR: INVALID USERNAME!')),
+  password: Optional(Check(pwd => isString(pwd) && pwd.length >= 6)),
+  access_token: Optional(Some([isString, Number.isInteger]), 'default token'),
+  birthyear: Optional(Check(b => Number.isInteger(b) && 1900 <= b && b <= 2018)),
+  email: Optional(Check(isEmail)),
+  contacts: Optional(Each(Keys({
+    name: Required(Enum(['phone', 'email'])),
+    value: Required(Check(isString)),
+  })))
+});
+
+const values = validateForm({
+  username: 'HelloTrava',
+  password: 'secretoversecret',
+  birthyear: 1990,
+});
+if (values instanceof ValidationError) {
+  console.error('FORM ERRORS', values.data);
+} else {
+  console.log('FORM VALUES', values);
+}
+</code></pre>
     </main>
     <footer class="text-center">
       <nav class="breadcrumbs push-center">

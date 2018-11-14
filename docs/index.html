@@ -29,7 +29,7 @@
     </header>
     <main>
       <p><strong>Trava</strong> stands for <strong>TRA</strong>nsform and <strong>VA</strong>lidate. Inspired by <a href="http://funcool.github.io/struct/latest/">struct</a>.</p>
-      <p>The main goal of the library is to provide highly extendable and customizable way of validation JavaScript entities. Validation is often goes along with parsing or transforming values. So coercion feature is included by design into Trava.</p>
+      <p>The main goal of the library is to provide highly extendable and customizable way of JavaScript entities validation. Validation often goes along with parsing or transforming values. So coercion feature is included by design into Trava.</p>
 
 
       <h2 id="features" class="section-h"><a href="#features">Features</a></h2>
@@ -48,23 +48,23 @@
       <pre><code>import Trava from 'trava';</code></pre>
       <p>or use CDN:</p>
       <pre><code>&lt;script src=&quot;https://unpkg.com/trava&quot;&gt;&lt;/script&gt;</code></pre>
-      <p>For modern browsers <em>es201X</em> builds available (<code>trava.es.js</code> and <code>trava.es.min.js</code>).</p>
+      <p>For modern browsers <em>es201X</em> builds are available (<code>trava.es.js</code> and <code>trava.es.min.js</code>).</p>
 
 
       <h2 id="getting-started" class="section-h"><a href="#getting-started">Getting Started</a></h2>
-      Lets imaging the most obvious and simplest validator. Probably it will look like:
+      Let's imaging the most obvious and simple validator. Probably it will look like:
       <pre><code>function validate (value) {
   // any checking...
   if (!check(value)) return false;
   return true;
 }</code></pre>
-      But in real scenarious we'd like also to get some error details, e.g.:
+      But in real scenarios we'd also like to get some error details, e.g.:
       <pre><code>function validate (value) {
   if (!check1(value)) return 'ERROR_1';
   if (!check2(value)) return 'ERROR_2';
   return true;
 }</code></pre>
-      <p>We may stop here and probably you don't need any library to do validation this way, may be just some primitives for common cases. But there is one more feature we might want to get and when <strong>Trava</strong> could help. While using JSON it's often needed to parse or convert values after validation. Code for parsing looks pretty the same as validation just <code>validate</code> is replaced to <code>parse</code>. In <strong>Trava</strong> these steps are united together. To support both validation and transformation we need to distinguish error from transformed value returned from validator. Probably we could use js <code>Error</code>, but it works only with string messages. Fortunately <strong>Trava</strong> has own <code>ValidationError</code> to support complex errors.
+      <p>We may stop here and probably you don't need any library to do validation this way, may be just some primitives for common cases. But there is one more feature we might want to get and when <strong>Trava</strong> could help. While using JSON it's often needed to parse or convert values after validation. Code for parsing looks pretty similar to validation:  its just <code>validate</code> being replaced with <code>parse</code>. In <strong>Trava</strong> these steps are united together. To support both validation and transformation we need to distinguish error from transformed value returned from validator. Probably we could use js <code>Error</code>, but it works only with string messages. Fortunately <strong>Trava</strong> has own <code>ValidationError</code> to support complex errors.
       </p>
       <p>So <strong>Trava</strong> validator looks like:</p>
       <pre><code>function validate (value) {
@@ -81,7 +81,7 @@ if (result instanceof Trava.ValidationError) {
   const goodTransformedValue = result;
 }
 </code></pre>
-    <p>That's all you have to know to start using <strong>Trava</strong>. It is very simple. The second advantage why to use <strong>Trava</strong> is a collection of helpful <a href="#operators">operators</a> out of the box. See <a href="#examples">examples</a> how to use them.</p>
+    <p>That's all you have to know to start using <strong>Trava</strong>. It is very simple. The second advantage why to use <strong>Trava</strong> is a collection of helpful <a href="#operators">operators</a> out of the box. See <a href="#examples">examples</a> to learn how to use them.</p>
 
 
     <h2 id="operators" class="section-h"><a href="#operators">Operators</a></h2>
@@ -92,6 +92,7 @@ if (result instanceof Trava.ValidationError) {
         <li><a href="#operators-optional">Optional</a></li>
         <li><a href="#operators-nullable">Nullable</a></li>
         <li><a href="#operators-check">Check</a></li>
+        <li><a href="#operators-enum">Enum</a></li>
         <li><a href="#operators-each">Each</a></li>
         <li><a href="#operators-keys">Keys</a></li>
         <li><a href="#operators-some">Some</a></li>
@@ -123,9 +124,9 @@ console.log(requiredValidator(value)); // ValidationError('Value is required')
 value = 'any';
 console.log(requiredValidator(value)); // `Required` is bypassed
 </code></pre>
-    <p>Custom error message could be set by providing it as a second argument:</p>
+    <p>Custom error message can be set by providing it as a second argument:</p>
     <pre><code>const requiredValidator = Trava.Required(validator, 'My custom error message');</code></pre>
-    <p>Or to set default use:</p>
+    <p>Or use the following to set the default one:</p>
     <pre><code>Trava.Required.ErrorMessage = 'My default required error';</code></pre>
 
     <h3 id="operators-optional" class="section-h"><a href="#operators-optional">Optional</a></h3>
@@ -136,19 +137,26 @@ console.log(requiredValidator(value)); // `Required` is bypassed
     <p><code>Nullable</code> is just like <a href="operators-optional">Optional</a> except it also checks if value is not <code>null</code>.</p>
 
     <h3 id="operators-check" class="section-h"><a href="#operators-check">Check</a></h3>
-    <code>Check</code> is helper to reuse validators which returns boolean:
+    <code>Check</code> is helper to reuse validators which return boolean:
     <pre><code>const myExistingValidator = (v) => v < 10;
 const travaValidator = Trava.Check(myExistingValidator);
 
 console.log(travaValidator(20)); // ValidationError('Incorrect value')
 </code></pre>
-    <p>Custom error message could be set by providing it as a second argument:</p>
+    <p>Custom error message can be set by providing it as a second argument:</p>
     <pre><code>const checkValidator = Trava.Check(n => Boolean(n), 'My custom error message');</code></pre>
-    <p>Or to set default use:</p>
+    <p>Or use the following to set the default one:</p>
     <pre><code>Trava.Check.ErrorMessage = 'My default check error';</code></pre>
 
+    <h3 id="operators-enum" class="section-h"><a href="#operators-enum">Enum</a></h3>
+    <code>Enum</code> checks if value exists in enum:
+    <pre><code>const enumValidator = Trava.Enum(['a', 'b']);
+console.log(enumValidator('c')); // ValidationError('Incorrect value')
+</code></pre>
+    <p>Just like <code>Check</code> it accepts an error message as a second argument.</p>
+
     <h3 id="operators-each" class="section-h"><a href="#operators-each">Each</a></h3>
-    <p><code>Each</code> is usefull for validating uniform data structures (now works only for arrays). Errors are aggregated in object by keys (or indices):</p>
+    <p><code>Each</code> is usefull for validating uniform data structures (so far  works only with arrays). Errors are aggregated in object by keys (or indices):</p>
     <pre><code>const elementValidator = n => n < 10 ? n : new ValidationError('BAD NUMBER');
 const arrayValidator = Trava.Each(elementValidator);
 

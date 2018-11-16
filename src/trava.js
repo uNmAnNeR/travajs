@@ -6,6 +6,7 @@ import Required from './operators/Required';
 import Optional from './operators/Optional';
 import Nullable from './operators/Nullable';
 import Check from './operators/Check';
+import Enum from './operators/Enum';
 import Compose from './operators/Compose';
 import Some from './operators/Some';
 
@@ -26,6 +27,7 @@ Trava.Required = Required;
 Trava.Optional = Optional;
 Trava.Nullable = Nullable;
 Trava.Check = Check;
+Trava.Enum = Enum;
 Trava.Compose = Compose;
 Trava.Some = Some;
 Trava.ValidationError = ValidationError;

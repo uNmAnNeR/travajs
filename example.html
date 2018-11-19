@@ -36,6 +36,11 @@
         return obj;
       }
     ], ordata));
+
+
+    console.log(Trava({
+      a: Trava.Nullable(Trava.Check(String), 'custom req'),
+    }, {}));
   </script>
 </body>
 </html>

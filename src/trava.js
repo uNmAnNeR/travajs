@@ -1,4 +1,4 @@
-import { g } from './utils';
+import { g, asValueAccessor, isValueAccessor } from './utils';
 
 import Each from './operators/Each';
 import Keys from './operators/Keys';
@@ -32,6 +32,8 @@ Trava.Enum = Enum;
 Trava.Compose = Compose;
 Trava.Some = Some;
 Trava.ValidationError = ValidationError;
+Trava.asValueAccessor = asValueAccessor;
+Trava.isValueAccessor = isValueAccessor;
 
 g.Trava = Trava;
 export default Trava;

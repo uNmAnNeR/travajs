@@ -1,5 +1,7 @@
 import Compose from './Compose';
+import Required from './Required';
 import { ValidationError } from '../errors';
+import { isValueAccessor } from '../utils';
 
 
 export default
@@ -9,7 +11,10 @@ function Keys (vMap) {
     const valid = {};
 
     Object.keys(vMap).forEach(k => {
-      const validator = Compose(vMap[k]);
+      let validator = Compose(vMap[k]);
+      // make keys required by default
+      if (!isValueAccessor(validator)) validator = Required(validator);
+
       const res = validator(coll[k], k, coll, opts);
       if (res instanceof Error) {
         if (!errors) errors = {};

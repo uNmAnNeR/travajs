@@ -39,7 +39,7 @@
 
 
     console.log(Trava({
-      a: Trava.Optional(Trava.Check(String), 1)
+      a: Trava.Nullable(Trava.Check(String), 'custom req'),
     }, {}));
   </script>
 </body>

@@ -36,6 +36,11 @@
         return obj;
       }
     ], ordata));
+
+
+    console.log(Trava({
+      a: Trava.Optional(Trava.Check(String), 1)
+    }, {}));
   </script>
 </body>
 </html>

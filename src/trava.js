@@ -13,12 +13,13 @@ import Some from './operators/Some';
 import { ValidationError } from './errors';
 
 
-const Trava = function (scheme, data, opts) {
+const Trava = function (scheme, ...args) {
   const vs = Compose(scheme);
+  if (!args.length) return vs;
   // possible opts to implement:
   // - skipErrors - return just valid fields, skip errors
   // - wrapExceptions - treat exceptions like validation errors
-  return vs(data, opts);
+  return vs(...args);
 };
 
 Trava.Each = Each;

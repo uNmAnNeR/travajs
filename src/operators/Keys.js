@@ -14,7 +14,7 @@ function Keys (vMap) {
       if (res instanceof Error) {
         if (!errors) errors = {};
         errors[k] = ValidationError.extractData(res);
-      } else if (k in coll) {
+      } else if (k in coll || res !== undefined) {
         valid[k] = res;
       }
     });

@@ -1,11 +1,15 @@
 import Compose from './Compose';
+import Required from './Required';
 import { ValidationError } from '../errors';
+import { isValueAccessor } from '../utils';
 
 // TODO flow
 // TODO Currently works only for Arrays
 export default
 function Each (validator, eachOpts=Each.DEFAULTS) {
   validator = Compose(validator);
+  // make keys required by default
+  if (!isValueAccessor(validator)) validator = Required(validator);
 
   return function (coll, opts) {
     let errors;

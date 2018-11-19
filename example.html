@@ -39,8 +39,8 @@
 
 
     console.log(Trava({
-      a: Trava.Nullable(Trava.Check(String), 'custom req'),
-    }, {}));
+      a: Trava.Each(Trava.Check(String), 'custom req'),
+    }, {a: [null]}));
   </script>
 </body>
 </html>

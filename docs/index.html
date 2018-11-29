@@ -98,6 +98,15 @@ if (result instanceof Trava.ValidationError) {
         <li><a href="#operators-some">Some</a></li>
       </ul>
     </nav>
+    <p>Despite operators itself are just functions, it's convinient to use <code>Trava</code> to build validators or validate data directly:</p>
+    <pre><code>import Trava from 'trava';
+let validator = Trava(validators);
+let values = validator(data);
+
+// or validate directly
+values = Trava(validators, data);
+</code></pre>
+
     <h3 id="operators-compose" class="section-h"><a href="#operators-compose">Compose</a></h3>
     <p><a href="https://en.wikipedia.org/wiki/Function_composition_(computer_science)" target="_blank">Compose</a> is used to combine several validators into one. E.g.:</p>
     <pre><code>const validator1 = n => n < 10 ? n : new ValidationError('BAD NUMBER');
@@ -163,9 +172,12 @@ const arrayValidator = Trava.Each(elementValidator);
 console.log(arrayValidator([1, 15, 7, 5, 20]));
 // ValidationError({2: 'BAD NUMBER', 4: 'BAD NUMBER'})
 </code></pre>
+    <fieldset>
+      <strong>Note:</strong> Each content is required by default, use <code>Optional</code> otherwise.
+    </fieldset>
 
     <h3 id="operators-keys" class="section-h"><a href="#operators-keys">Keys</a></h3>
-    <p><code>Keys</code> is used to validate Objects:</p>
+    <p><code>Keys</code> is used to validate <code>Objects</code>:</p>
     <pre><code>const objectValidator = Trava.Keys({
   a: Trava.Check(a => a >= 0),
   b: Trava.Required(Trava.Check(b => b.startsWith('nice'), 'HEY, think positive!')),
@@ -180,6 +192,15 @@ console.log(objectValidator({
 //   b: 'HEY, think positive!',
 // })
 </code></pre>
+    <p>When used inside other operators explicit call <code>Trava.Keys</code> could be omitted. E.g.:</p>
+    <pre><code>const objectValidator = Trava.Required({
+  a: Trava.Check(a => a >= 0),
+  b: Trava.Check(b => b < 0),
+});
+</code></pre>
+    <fieldset>
+      <strong>Note:</strong> Keys is required by default, use <code>Optional</code> otherwise.
+    </fieldset>
 
     <h3 id="operators-some" class="section-h"><a href="#operators-some">Some</a></h3>
     <p><code>Some</code> is like <a href="#operators-compose">Compose</a> but tries to find first non error.</p>
@@ -195,12 +216,13 @@ console.log(someValidator({}));  // ValidationError('Not a number') <-- latest e
 </code></pre>
 
     <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h2>
-    <pre><code>const { Required, Optional, Each, Enum, Check, Keys, Some, ValidationError } = require('trava');
+    <pre><code>const t = require('trava');
+const { Required, Optional, Each, Enum, Check, Keys, Some, ValidationError } = t;
 
 const isString = s => typeof s === 'string';
 const isEmail = s => /^\S+@\S+\.\S+$/.test(s);
 
-const validateForm = Keys({
+const validateForm = t({
   username: Required(Check(un => isString(un) && /^\w{3,30}$/.test(un), 'CUSTOM ERROR: INVALID USERNAME!')),
   password: Optional(Check(pwd => isString(pwd) && pwd.length >= 6)),
   access_token: Optional(Some([isString, Number.isInteger]), 'default token'),

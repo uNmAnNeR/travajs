@@ -28,6 +28,8 @@ Supports all major browsers and IE11+
 ## Docs, Examples, Demo
 [https://unmanner.github.io/travajs/](https://unmanner.github.io/travajs/)
 
-## Support Development
+## Many Thanks to
+[@Artem Gorev](https://github.com/ArtemGorev)
 
+## Support Development
 [Paypal](https://www.paypal.me/alexeykryazhev/3)

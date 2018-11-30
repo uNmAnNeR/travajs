@@ -223,15 +223,15 @@ const isString = s => typeof s === 'string';
 const isEmail = s => /^\S+@\S+\.\S+$/.test(s);
 
 const validateForm = t({
-  username: Required(Check(un => isString(un) && /^\w{3,30}$/.test(un), 'CUSTOM ERROR: INVALID USERNAME!')),
+  username: Check(un => isString(un) && /^\w{3,30}$/.test(un), 'CUSTOM ERROR: INVALID USERNAME!'), // required by default
   password: Optional(Check(pwd => isString(pwd) && pwd.length >= 6)),
   access_token: Optional(Some([isString, Number.isInteger]), 'default token'),
   birthyear: Optional(Check(b => Number.isInteger(b) && 1900 <= b && b <= 2018)),
   email: Optional(Check(isEmail)),
-  contacts: Optional(Each(Keys({
-    name: Required(Enum(['phone', 'email'])),
-    value: Required(Check(isString)),
-  })))
+  contacts: Optional(Each({
+    name: Enum(['phone', 'email']),
+    value: Check(isString),
+  }))
 });
 
 const values = validateForm({

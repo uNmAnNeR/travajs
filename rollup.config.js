@@ -42,7 +42,11 @@ const babelConf = isES ? {
     '@babel/preset-flow',
   ],
   exclude: 'node_modules/**',
-  plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-object-assign']
+  plugins: [
+    '@babel/plugin-proposal-object-rest-spread',
+    '@babel/plugin-transform-object-assign',
+    [ "@babel/plugin-proposal-class-properties" , { "loose" : true }]
+  ]
 };
 
 

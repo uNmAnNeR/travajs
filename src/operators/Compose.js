@@ -1,24 +1,22 @@
 // @flow
-import { type Validator } from './types';
+import { type MixedValidator, type Validator } from './types';
 import { ValidationError } from '../errors';
 import { g } from '../utils';
 
 
 export default
-function Compose (vs: Array<Validator> | Validator = (d) => d) {
-  if (!Array.isArray(vs)) {
-    if (vs && typeof vs === 'object') return g.Trava.Keys(vs);
-    return vs;
+function Compose (mv: MixedValidator = (v) => v): Validator {
+  if (!Array.isArray(mv)) {
+    if (mv && typeof mv === 'object') return g.Trava.Keys(mv);
+    return mv;
   }
-  vs = vs.map(Compose);
+  const vs = mv.map(Compose);
 
-  return function (data: any, ...args: *) {
-    let d=data;
-    let res;
+  return function (value: any, ...args: *) {
+    let res = value;
 
     for (let i=0; i<vs.length; ++i) {
-      const v = vs[i];
-      res = v(d, ...args);
+      res = vs[i](res, ...args);
       if (res instanceof Error) break;
     }
 

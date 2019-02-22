@@ -1,4 +1,5 @@
 // @flow
+import { type Validator } from './operators/types';
 
 
 /** Checks if value is string */
@@ -7,14 +8,15 @@ function isString (str: mixed): boolean %checks {
   return typeof str === 'string' || str instanceof String;
 }
 
+type ValueAccessorValidator = Validator & { __valueAccessor: boolean };
 export
-function asValueAccessor (fn: any) {
+function asValueAccessor (fn: Function): ValueAccessorValidator {
   fn.__valueAccessor = true;
   return fn;
 }
 
 export
-function isValueAccessor (fn: any): boolean {
+function isValueAccessor (fn: Validator | ValueAccessorValidator): boolean {
   return fn.__valueAccessor;
 }
 

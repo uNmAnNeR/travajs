@@ -1,12 +1,14 @@
+// @flow
 import Compose from './Compose';
 import Required from './Required';
 import { ValidationError } from '../errors';
 import { isValueAccessor } from '../utils';
+import { type MixedValidator, type Validator } from './types';
 
 
 export default
-function Keys (vMap) {
-  return function (coll, opts) {
+function Keys (vMap: { [string]: MixedValidator }): Validator {
+  return function (coll: { [string]: any }, ...args: *) {
     let errors;
     const valid = {};
 
@@ -15,7 +17,7 @@ function Keys (vMap) {
       // make keys required by default
       if (!isValueAccessor(validator)) validator = Required(validator);
 
-      const res = validator(coll[k], k, coll, opts);
+      const res = validator(coll[k], k, coll, ...args);
       if (res instanceof Error) {
         if (!errors) errors = {};
         errors[k] = ValidationError.extractData(res);

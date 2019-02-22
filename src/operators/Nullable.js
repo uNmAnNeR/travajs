@@ -1,13 +1,15 @@
+// @flow
 import Compose from './Compose';
 import { asValueAccessor } from '../utils';
+import { type MixedValidator } from './types';
 
 
 export default
-function Nullable (vs, defaultValue=null) {
-  vs = Compose(vs);
+function Nullable (vs: MixedValidator, defaultValue: any=null) {
+  const v = Compose(vs);
 
-  return asValueAccessor(function (d, ...args) {
-    if (d == null) return defaultValue;
-    return vs(d, ...args);
+  return asValueAccessor(function (value: any, ...args: *) {
+    if (value == null) return defaultValue;
+    return v(value, ...args);
   });
 }

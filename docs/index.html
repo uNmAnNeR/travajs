@@ -173,7 +173,7 @@ console.log(arrayValidator([1, 15, 7, 5, 20]));
 // ValidationError({2: 'BAD NUMBER', 4: 'BAD NUMBER'})
 </code></pre>
     <fieldset>
-      <strong>Note:</strong> Each content is required by default, use <code>Optional</code> otherwise.
+      <strong>Note:</strong> Values of <code>Each</code> are wrapped with <code>Required</code> by default, use <code>Optional</code> otherwise.
     </fieldset>
 
     <h3 id="operators-keys" class="section-h"><a href="#operators-keys">Keys</a></h3>
@@ -199,13 +199,12 @@ console.log(objectValidator({
 });
 </code></pre>
     <fieldset>
-      <strong>Note:</strong> Keys is required by default, use <code>Optional</code> otherwise.
+      <strong>Note:</strong> Values of <code>Keys</code> are wrapped with <code>Required</code> by default, use <code>Optional</code> otherwise.
     </fieldset>
 
     <h3 id="operators-some" class="section-h"><a href="#operators-some">Some</a></h3>
     <p><code>Some</code> is like <a href="#operators-compose">Compose</a> but tries to find first non error.</p>
-    <pre><code>
-const someValidator = Trava.Some([
+    <pre><code>const someValidator = Trava.Some([
   Trava.Check(isString, 'Not a string'),
   Trava.Check(isNumber, 'Not a number'),
 ]);

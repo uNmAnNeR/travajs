@@ -1,22 +1,28 @@
+// @flow
 import Compose from './Compose';
 import Required from './Required';
 import { ValidationError } from '../errors';
 import { isValueAccessor } from '../utils';
+import { type MixedValidator, type Validator } from './types';
 
-// TODO flow
+
+type EachOptions = {
+  errorsTo: Class<Object> | Class<Array<any>>;
+  requiredMessage?: any;
+}
 // TODO Currently works only for Arrays
 export default
-function Each (validator, eachOpts=Each.DEFAULTS) {
-  validator = Compose(validator);
+function Each (mv: MixedValidator, eachOpts: EachOptions=Each.DEFAULTS): Validator {
+  let v: Validator = Compose(mv);
   // make keys required by default
-  if (!isValueAccessor(validator)) validator = Required(validator);
+  if (!isValueAccessor(v)) v = Required(v, eachOpts.requiredMessage);
 
   return function (coll, opts) {
     let errors;
     const valid = [];
 
     for (let i=0; i<coll.length; i++) {
-      const res = validator(coll[i], i, coll, opts);
+      const res = v(coll[i], i, coll, opts);
       if (res instanceof Error) {
         const errorData = ValidationError.extractData(res);
         if (eachOpts.errorsTo === Array) {

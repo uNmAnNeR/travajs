@@ -35,6 +35,13 @@ describe('ValidationError', function () {
     assert.equal(error2.message, JSON.stringify(errorData), 'Incorrect error message (from ValidationError) (2)');
   });
 
+  it('should extract data from String', function () {
+    const errorStr = 'ERROR';
+    const error = new ValidationError(errorStr);
+
+    assert.equal(error.message, errorStr, 'Can not extract error data from String');
+  });
+
   it('should extract data from Stringifyable', function () {
     const errorStr = 'ERROR';
     const errorData = { toJSON() { throw 'error'; }, toString() { return errorStr; } };

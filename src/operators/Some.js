@@ -1,11 +1,11 @@
 // @flow
-import { type Validator } from './types';
+import { type Validator, type MixedValidator } from './types';
 import Compose from './Compose';
 
 
 export default
-function Some (vs: Array<Validator>) {
-  vs = vs.map(Compose);
+function Some (mv: Array<MixedValidator>) {
+  const vs = mv.map(Compose);
 
   return function (value: any, ...args: *) {
     let res;

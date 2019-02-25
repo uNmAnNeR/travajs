@@ -1,4 +1,7 @@
 // @flow
+import { isString } from './utils';
+
+
 export
 class ValidationError<T> extends Error {
   message: string;
@@ -12,6 +15,7 @@ class ValidationError<T> extends Error {
   static stringify (error: any): string {
     if (error instanceof ValidationError) return ValidationError.stringify(error.data);
     if (error instanceof Error) return error.message;
+    if (isString(error)) return error;
 
     try {
       return JSON.stringify(error);

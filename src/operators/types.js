@@ -6,4 +6,7 @@ export
 type Validator = (data: any, ...args: *) => ValidateResult;
 
 export
-type MixedValidator = Validator | Array<Validator>;
+type ObjectValidator = { [string]: MixedValidator };
+
+export
+type MixedValidator = Validator | Array<Validator> | ObjectValidator;

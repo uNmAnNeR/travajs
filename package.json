@@ -43,7 +43,6 @@
   },
   "scripts": {
     "doc": "echo 'TODO'",
-    "lerna": "lerna",
     "flow": "flow",
     "pretest": "flow check",
     "watch": "rollup -c -w",

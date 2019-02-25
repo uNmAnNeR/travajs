@@ -1,7 +1,6 @@
 *
 !LICENSE
 !README.md
+!index.d.ts
 !dist
 !dist/**/*
-!src
-!src/**/*

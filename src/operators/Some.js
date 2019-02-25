@@ -4,7 +4,7 @@ import Compose from './Compose';
 
 
 export default
-function Some (mv: Array<MixedValidator>) {
+function Some (mv: Array<MixedValidator>): Validator {
   const vs = mv.map(Compose);
 
   return function (value: any, ...args: *) {

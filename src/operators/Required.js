@@ -6,11 +6,11 @@ import { type MixedValidator, type Validator } from './types';
 
 
 export default
-function Required (vs: MixedValidator, msg: any=Required.ErrorMessage): Validator {
+function Required (vs: MixedValidator, errorMsg: any=Required.ErrorMessage): Validator {
   const v = Compose(vs);
 
   return asValueAccessor(function (value, ...args) {
-    if (value === undefined) return new ValidationError(msg);
+    if (value === undefined) return new ValidationError(errorMsg);
     return v(value, ...args);
   });
 }

@@ -57,4 +57,10 @@ describe('ValidationError', function () {
 
     assert.equal(ValidationError.extractData(error), errorStr, 'Can not extract error data from any');
   });
+
+  it('should extract data from string', function () {
+    const errorStr = 'DATA';
+
+    assert.equal(ValidationError.extractData(errorStr), errorStr, 'Can not extract error data from string');
+  });
 });

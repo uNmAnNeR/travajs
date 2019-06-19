@@ -135,8 +135,10 @@ console.log(requiredValidator(value)); // `Required` is bypassed
 </code></pre>
     <p>Custom error message can be set by providing it as a second argument:</p>
     <pre><code>const requiredValidator = Trava.Required(validator, 'My custom error message');</code></pre>
-    <p>Or use the following to set the default one:</p>
+    <p>Or set the default for all validators:</p>
     <pre><code>Trava.Required.ErrorMessage = 'My default required error';</code></pre>
+    <p>Error message also could be a function which should return error data and will be called with same arguments as validator when error occurs.</p>
+    <pre><code>const validator = Trava.Check(v => v > 0, v => `${v} is not positive number!`);</code></pre>
 
     <h3 id="operators-optional" class="section-h"><a href="#operators-optional">Optional</a></h3>
     <p><code>Optional</code> checks if value is not defined then returns value or default value which can be provided as a second argument:</p>

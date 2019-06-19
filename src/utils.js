@@ -20,6 +20,12 @@ function isValueAccessor (fn: Validator | ValueAccessorValidator): boolean {
   return fn.__valueAccessor;
 }
 
+export
+function prepareErrorMessage (errorMsg: any, ...args: *) {
+  if (typeof errorMsg === 'function') return errorMsg(...args);
+  return errorMsg;
+}
+
 /* eslint-disable no-undef */
 export
 const g: any = typeof window !== 'undefined' && window ||

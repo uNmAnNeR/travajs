@@ -1,5 +1,5 @@
 export as namespace Trava;
-export = Trava;
+export default Trava;
 
 
 declare function Trava (scheme: Trava.MixedValidator): Trava.Validator;
@@ -17,7 +17,7 @@ declare namespace Trava {
     requiredMessage?: any;
   }
   function Each (vs: MixedValidator, opts?: EachOptions): Validator;
-  function Keys (vMap: { [k: string]: MixedValidator }): Validator;
+  function Keys (vMap: ObjectValidator): Validator;
   function Required (vs: MixedValidator, errorMsg?: any): Validator;
   function Optional (vs: MixedValidator, defaultValue?: any): Validator;
   function Nullable (vs: MixedValidator, defaultValue?: any): Validator;

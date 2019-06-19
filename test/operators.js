@@ -36,6 +36,16 @@ describe('Operators', function () {
       assert(validData instanceof ValidationError, 'Check result is not error');
       assert.equal(validData.message, errorMsg, 'Invalid error message');
     });
+
+    it('should format error with function', function () {
+      const POS_MSG = 'POS';
+      const errorMsg = val => (val > 0 ? POS_MSG : 'NEG');
+      const v = Check(value => false, errorMsg);
+
+      const resPos = v(1);
+      assert(resPos instanceof ValidationError, 'Check result is not error');
+      assert.equal(resPos.message, POS_MSG, 'Invalid error message');
+    });
   });
 
 
@@ -312,6 +322,16 @@ describe('Operators', function () {
       assert.equal(v(1), 1, 'Invalid result');
       assert(v(0) instanceof ValidationError, 'Result is not error');
       assert(v(10) instanceof ValidationError, 'Result is not error');
+    });
+
+    it('should format error with function', function () {
+      const POS_MSG = 'POS';
+      const errorMsg = (val, arg) => (arg > 0 ? POS_MSG : 'NEG');
+      const v = Required(value => value, errorMsg);
+
+      const resPos = v(undefined, 1);
+      assert(resPos instanceof ValidationError, 'Check result is not error');
+      assert.equal(resPos.message, POS_MSG, 'Invalid error message');
     });
   });
 

@@ -1,5 +1,8 @@
-import { ValidationError } from '../src/errors';
 import assert from 'assert';
+import sinon, { fake, spy } from 'sinon';
+
+import { ValidationError } from '../src/errors';
+import { prepareErrorMessage } from '../src/utils';
 
 
 describe('ValidationError', function () {
@@ -62,5 +65,14 @@ describe('ValidationError', function () {
     const errorStr = 'DATA';
 
     assert.equal(ValidationError.extractData(errorStr), errorStr, 'Can not extract error data from string');
+  });
+
+  it('should extract error from function', function () {
+    const err = fake.returns('ERR');
+    const args = [0, '1', true];
+
+    prepareErrorMessage(err, ...args);
+
+    assert(err.lastCall.calledWith(...args), 'Invalid prepare error call');
   });
 });

@@ -16,18 +16,18 @@ declare namespace Trava {
     errorsTo: any;  // actually available values are {Object, Array}
     requiredMessage?: any;
   }
-  function Each (vs: MixedValidator, opts?: EachOptions): Validator;
-  function Keys (vMap: ObjectValidator): Validator;
-  function Required (vs: MixedValidator, errorMsg?: any): Validator;
-  function Optional (vs: MixedValidator, defaultValue?: any): Validator;
-  function Nullable (vs: MixedValidator, defaultValue?: any): Validator;
-  function Check (fn: (value: any) => boolean, errorMsg?: any): Validator;
-  function Enum (values: Array<any>, errorMsg?: any): Validator;
-  function Compose (vs: MixedValidator): Validator;
-  function Some (vs: MixedValidator): Validator;
+  export function Each (vs: MixedValidator, opts?: EachOptions): Validator;
+  export function Keys (vMap: ObjectValidator): Validator;
+  export function Required (vs: MixedValidator, errorMsg?: any): Validator;
+  export function Optional (vs: MixedValidator, defaultValue?: any): Validator;
+  export function Nullable (vs: MixedValidator, defaultValue?: any): Validator;
+  export function Check (fn: (value: any) => boolean, errorMsg?: any): Validator;
+  export function Enum (values: Array<any>, errorMsg?: any): Validator;
+  export function Compose (vs: MixedValidator): Validator;
+  export function Some (vs: MixedValidator): Validator;
 
-  function asValueAccessor (fn: Function): ValueAccessorValidator;
-  function isValueAccessor (fn: Validator | ValueAccessorValidator): boolean;
+  export function asValueAccessor (fn: Function): ValueAccessorValidator;
+  export function isValueAccessor (fn: Validator | ValueAccessorValidator): boolean;
   export class ValidationError<T> extends Error {
     message: string;
     data: T;

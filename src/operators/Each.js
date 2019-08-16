@@ -17,12 +17,12 @@ function Each (mv: MixedValidator, eachOpts: EachOptions=Each.DEFAULTS): Validat
   // make keys required by default
   if (!isValueAccessor(v)) v = Required(v, eachOpts.requiredMessage);
 
-  return function (coll, opts) {
+  return function (coll, ...args: *) {
     let errors;
     const valid = [];
 
     for (let i=0; i<coll.length; i++) {
-      const res = v(coll[i], i, coll, opts);
+      const res = v(coll[i], i, coll, ...args);
       if (res instanceof Error) {
         const errorData = ValidationError.extractData(res);
         if (eachOpts.errorsTo === Array) {

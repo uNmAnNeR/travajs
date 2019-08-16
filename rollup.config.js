@@ -5,22 +5,16 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 
 
-const isProd = process.env.NODE_ENV === 'production';
 const format = process.env.BABEL_ENV || 'umd';
 
-const isES = format === 'es';
-const file = 'dist/trava' +
-  (format !== 'umd' ? '.' + format : '') +
-  (isProd ? '.min' : '') +
-  '.js';
-
-const input = 'src/trava.js'; // TODO isES ? 'src/trava.js' : 'src/trava.shim.js';
+const isES = format.indexOf('es') === 0;
+const basePath = 'dist/trava' + (format !== 'umd' ? '.' + format : '');
 
 
-export default {
-  input,
+export default [false, true].map(min => ({
+  input: 'src/trava.js',
   output: {
-    file,
+    file: `${basePath}${min ? '.min' : ''}.js`,
     format,
     name: 'Trava',
     sourcemap: true,
@@ -30,6 +24,6 @@ export default {
     resolve(),
     babel(),
     !isES && commonjs(),
-    isProd && terser()
-  ]
-}
+    min && terser(),
+  ],
+}));

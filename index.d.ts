@@ -23,6 +23,7 @@ declare namespace Trava {
   export function Nullable (vs: MixedValidator, defaultValue?: any): Validator;
   export function Check (fn: (value: any) => boolean, errorMsg?: any): Validator;
   export function Enum (values: Array<any>, errorMsg?: any): Validator;
+  export function Const (value: any, errorMsg?: any): Validator;
   export function Compose (vs: MixedValidator): Validator;
   export function Some (vs: Array<MixedValidator>): Validator;
 

@@ -93,8 +93,10 @@ if (result instanceof Trava.ValidationError) {
         <li><a href="#operators-nullable">Nullable</a></li>
         <li><a href="#operators-check">Check</a></li>
         <li><a href="#operators-enum">Enum</a></li>
+        <li><a href="#operators-const">Const</a></li>
         <li><a href="#operators-each">Each</a></li>
         <li><a href="#operators-keys">Keys</a></li>
+        <li><a href="#operators-some">Some</a></li>
         <li><a href="#operators-some">Some</a></li>
       </ul>
     </nav>
@@ -163,6 +165,13 @@ console.log(travaValidator(20)); // ValidationError('Incorrect value')
     <code>Enum</code> checks if value exists in enum:
     <pre><code>const enumValidator = Trava.Enum(['a', 'b']);
 console.log(enumValidator('c')); // ValidationError('Incorrect value')
+</code></pre>
+    <p>Just like <code>Check</code> it accepts an error message as a second argument.</p>
+
+    <h3 id="operators-const" class="section-h"><a href="#operators-const">Const</a></h3>
+    <code>Const</code> checks if value equals:
+    <pre><code>const constValidator = Trava.Const('a');
+console.log(constValidator('c')); // ValidationError('Incorrect value')
 </code></pre>
     <p>Just like <code>Check</code> it accepts an error message as a second argument.</p>
 

@@ -11,6 +11,7 @@ import Nullable from '../src/operators/Nullable';
 import Optional from '../src/operators/Optional';
 import Required from '../src/operators/Required';
 import Some from '../src/operators/Some';
+import Const from '../src/operators/Const';
 import { ValidationError } from '../src/errors';
 import { isValueAccessor } from '../src/utils';
 
@@ -369,6 +370,15 @@ describe('Operators', function () {
       assert.equal(v(25), 25, 'Invalid result');
       assert(v(0) instanceof ValidationError, 'Result is not error');
       assert(v(15) instanceof ValidationError, 'Result is not error');
+    });
+  });
+
+  describe('Const', function () {
+    it('should work', function () {
+      const v = Const(1);
+
+      assert.equal(v(1), 1, 'Const returns invalid data');
+      assert(v(4) instanceof ValidationError, 'Const result is not error');
     });
   });
 });

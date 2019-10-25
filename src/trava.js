@@ -40,3 +40,18 @@ Trava.isValueAccessor = isValueAccessor;
 
 g.Trava = Trava;
 export default Trava;
+export {
+  Each,
+  Keys,
+  Required,
+  Optional,
+  Nullable,
+  Check,
+  Enum,
+  Compose,
+  Some,
+  Const,
+  ValidationError,
+  asValueAccessor,
+  isValueAccessor,
+};

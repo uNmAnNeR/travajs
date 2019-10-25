@@ -12,7 +12,7 @@ const basePath = 'dist/trava' + (format !== 'umd' ? '.' + format : '');
 
 
 export default [false, true].map(min => ({
-  input: 'src/trava.js',
+  input: `src/trava${format === 'umd' ? '.umd' : ''}.js`,
   output: {
     file: `${basePath}${min ? '.min' : ''}.js`,
     format,

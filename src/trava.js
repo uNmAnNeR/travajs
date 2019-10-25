@@ -9,6 +9,7 @@ import Check from './operators/Check';
 import Enum from './operators/Enum';
 import Compose from './operators/Compose';
 import Some from './operators/Some';
+import Const from './operators/Const';
 
 import { ValidationError } from './errors';
 
@@ -31,6 +32,7 @@ Trava.Check = Check;
 Trava.Enum = Enum;
 Trava.Compose = Compose;
 Trava.Some = Some;
+Trava.Const = Const;
 Trava.ValidationError = ValidationError;
 Trava.asValueAccessor = asValueAccessor;
 Trava.isValueAccessor = isValueAccessor;

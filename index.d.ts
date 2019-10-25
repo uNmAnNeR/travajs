@@ -24,7 +24,7 @@ declare namespace Trava {
   export function Check (fn: (value: any) => boolean, errorMsg?: any): Validator;
   export function Enum (values: Array<any>, errorMsg?: any): Validator;
   export function Compose (vs: MixedValidator): Validator;
-  export function Some (vs: MixedValidator): Validator;
+  export function Some (vs: Array<MixedValidator>): Validator;
 
   export function asValueAccessor (fn: Function): ValueAccessorValidator;
   export function isValueAccessor (fn: Validator | ValueAccessorValidator): boolean;

@@ -2,7 +2,7 @@
 import Compose from './Compose';
 import Required from './Required';
 import { ValidationError } from '../errors';
-import { isValueAccessor } from '../utils';
+import { isValueAccessor, isObject } from '../utils';
 import { type MixedValidator, type Validator } from './types';
 
 
@@ -21,7 +21,7 @@ function Keys (vMap: { [string]: MixedValidator }): Validator {
       if (res instanceof Error) {
         if (!errors) errors = {};
         errors[k] = ValidationError.extractData(res);
-      } else if (k in coll || res !== undefined) {
+      } else if (isObject(coll) && k in coll || res !== undefined) {
         valid[k] = res;
       }
     });

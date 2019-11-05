@@ -8,6 +8,11 @@ function isString (str: mixed): boolean %checks {
   return typeof str === 'string' || str instanceof String;
 }
 
+export
+function isObject (obj: any): boolean %checks {
+  return typeof obj === 'object' && obj != null || typeof obj === 'function';
+}
+
 type ValueAccessorValidator = {
   (data: any, ...args: *): ValidateResult,
   __valueAccessor: boolean,

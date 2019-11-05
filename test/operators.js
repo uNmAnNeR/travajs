@@ -223,6 +223,14 @@ describe('Operators', function () {
       assert(v({ a: 0 }) instanceof ValidationError, 'Result is not error');
       assert(v({ a: 10 }) instanceof ValidationError, 'Result is not error');
     });
+
+    it('should handle non-objects', function () {
+      const v = Keys({ a: Check(Number.isInteger) });
+      const vOpt = Keys({ a: Optional(Check(Number.isInteger)) });
+
+      assert(v('string is not object!') instanceof ValidationError, 'Result is not error');
+      assert.deepEqual(vOpt('string is not object!'), {}, 'Invalid result');
+    });
   });
 
   describe('Nullable', function () {

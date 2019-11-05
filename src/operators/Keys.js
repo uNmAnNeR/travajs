@@ -17,7 +17,7 @@ function Keys (vMap: { [string]: MixedValidator }): Validator {
       // make keys required by default
       if (!isValueAccessor(validator)) validator = Required(validator);
 
-      const res = validator(coll[k], k, coll, ...args);
+      const res = validator(coll && coll[k], k, coll, ...args);
       if (res instanceof Error) {
         if (!errors) errors = {};
         errors[k] = ValidationError.extractData(res);

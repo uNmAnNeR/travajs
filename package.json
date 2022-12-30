@@ -27,7 +27,7 @@
     "documentation": "^12.1.2",
     "eslint-plugin-flowtype": "^4.3.0",
     "flow-bin": "^0.110.1",
-    "mocha": "^6.2.2",
+    "mocha": "^10.2.0",
     "nyc": "^14.1.1",
     "rollup": "^1.25.2",
     "rollup-plugin-babel": "^4.3.3",
